@@ -34,7 +34,7 @@ function write_error {
 	write_out ERROR "$1" >&2
 }
 
-echo "[PocketMine] PHP compiler for Linux, MacOS and Android"
+echo "[PocketMine] 리눅스, MacOS 및 안드로이드를 위한 PHP 컴파일러"
 DIR="$(pwd)"
 date > "$DIR/install.log" 2>&1
 
@@ -51,17 +51,17 @@ done
 type wget >> "$DIR/install.log" 2>&1 || type curl >> "$DIR/install.log" || { echo >&2 "[ERROR] Please install \"wget\" or \"curl\""; ((ERRORS++)); }
 
 if [ "$(uname -s)" == "Darwin" ]; then
-	type glibtool >> "$DIR/install.log" 2>&1 || { echo >&2 "[ERROR] Please install GNU libtool"; ((ERRORS++)); }
+	type glibtool >> "$DIR/install.log" 2>&1 || { echo >&2 "[오류] GNU libtool(을)를 설치해주세요"; ((ERRORS++)); }
 	export LIBTOOL=glibtool
 	export LIBTOOLIZE=glibtoolize
 else
-	type libtool >> "$DIR/install.log" 2>&1 || { echo >&2 "[ERROR] Please install \"libtool\" or \"libtool-bin\""; ((ERRORS++)); }
+	type libtool >> "$DIR/install.log" 2>&1 || { echo >&2 "[오류] \"libtool\" 또는 \"libtool-bin\"(을)를 설치해주세요"; ((ERRORS++)); }
 	export LIBTOOL=libtool
 	export LIBTOOLIZE=libtoolize
 fi
 
 if [ $ERRORS -ne 0 ]; then
-	read -p "Press [Enter] to continue..."
+	read -p "계속하려면 [Enter](을)를 누르세요..."
 	exit 1
 fi
 
@@ -75,7 +75,7 @@ else
 	if [ $? -eq 0 ]; then
 		alias download_file="curl --insecure --silent --show-error --location --globoff"
 	else
-		echo "error, curl or wget not found"
+		echo "오류, curl 또는 wget(을)를 찾을 수 없습니다"
 		exit 1
 	fi
 fi
@@ -116,39 +116,39 @@ while getopts "::t:oj:srdlxzff:ugn" OPTION; do
 
 	case $OPTION in
 		t)
-			echo "[opt] Set target to $OPTARG"
+			echo "[opt] 대상을 "$OPTARG"(으)로 지정합니다"
 			COMPILE_TARGET="$OPTARG"
 			;;
 		j)
-			echo "[opt] Set make threads to $OPTARG"
+			echo "[opt] make 스레드를 to "$OPTARG"개로 지정합니다"
 			THREADS="$OPTARG"
 			;;
 		r)
-			echo "[opt] Will compile readline and ncurses"
+			echo "[opt] readline 및 ncurses(을)를 컴파일할 것입니다"
 			COMPILE_FANCY="yes"
 			;;
 		d)
-			echo "[opt] Will compile profiler and xdebug, will not remove sources"
+			echo "[opt] profiler 및 xdebug(을)를 컴파일할 것이며, 소스를 제거하지 않을 것입니다"
 			COMPILE_DEBUG="yes"
 			DO_CLEANUP="no"
 			CFLAGS="$CFLAGS -g"
 			CXXFLAGS="$CXXFLAGS -g"
 			;;
 		x)
-			echo "[opt] Doing cross-compile"
+			echo "[opt] 크로스 컴파일로 지정합니다"
 			IS_CROSSCOMPILE="yes"
 			;;
 		l)
-			echo "[opt] Will compile with LevelDB support"
+			echo "[opt] LevelDB 지원을 컴파일할 것입니다"
 			COMPILE_LEVELDB="yes"
 			;;
 		s)
-			echo "[opt] Will compile everything statically"
+			echo "[opt] 모든 것을 정적으로 컴파일할 것입니다"
 			DO_STATIC="yes"
 			CFLAGS="$CFLAGS -static"
 			;;
 		f)
-			echo "[opt] Enabling abusive optimizations..."
+			echo "[opt] 엄청난 성능 향상을 활성화합니다..."
 			DO_OPTIMIZE="yes"
 			OPTIMIZE_TARGET="$OPTARG"
 			;;
@@ -967,5 +967,5 @@ if [ "$DO_CLEANUP" == "yes" ]; then
 fi
 
 date >> "$DIR/install.log" 2>&1
-echo "[PocketMine] You should start the server now using \"./start.sh\"."
-echo "[PocketMine] If it doesn't work, please send the \"install.log\" file to the Bug Tracker."
+echo "[PocketMine] 이제 \"./start.sh\"(을)를 사용하여 서버를 시작해야 합니다."
+echo "[PocketMine] 만약 작동하지 않는다면, \"install.log\" 파일을 버그 트래커로 보내주세요."
